@@ -22,7 +22,8 @@
  import org.slf4j.Logger;
  import org.slf4j.LoggerFactory;
  import org.springframework.ai.chat.client.ChatClient;
- import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
+ import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor;
+ //import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
  import org.springframework.ai.chat.messages.Message;
  import org.springframework.ai.chat.model.ChatModel;
  import org.springframework.ai.chat.prompt.SystemPromptTemplate;
