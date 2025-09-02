@@ -5,6 +5,7 @@ import java.util.*;
 import org.cloudfoundry.samples.music.config.ai.MessageRetriever;
 import org.cloudfoundry.samples.music.domain.Album;
 import org.cloudfoundry.samples.music.domain.MessageRequest;
+import org.cloudfoundry.samples.music.domain.RandomIdGenerator;
 import org.cloudfoundry.samples.music.domain.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +23,7 @@ public class AIController {
     private static final Logger logger = LoggerFactory.getLogger(AIController.class);
     private MessageRetriever messageRetriever;
     private VectorStore vectorStore;
+    private RandomIdGenerator idGenerator;
 
     public static String generateVectorDoc(Album album) {
             return "artist: " + album.getArtist() + "\n" +
@@ -36,6 +38,7 @@ public class AIController {
     public AIController(VectorStore vectorStore, MessageRetriever messageRetriever) {
         this.messageRetriever = messageRetriever;
         this.vectorStore = vectorStore;
+        this.idGenerator = new RandomIdGenerator();
     }
     
     @RequestMapping(value = "/ai/rag", method = RequestMethod.POST)
@@ -51,6 +54,11 @@ public class AIController {
 
     @RequestMapping(value = "/ai/addDoc", method = RequestMethod.POST)
     public String addDoc(@RequestBody Album album) {
+
+        if (album.getId() == null) {
+            album.setId(idGenerator.generateId());
+        }
+
         String text = generateVectorDoc(album);
         Document doc = new Document(album.getId(), text, new HashMap<>());
         logger.info("Adding Album " + doc.toString());
