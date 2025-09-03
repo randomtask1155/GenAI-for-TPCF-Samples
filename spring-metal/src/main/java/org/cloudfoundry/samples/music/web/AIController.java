@@ -44,7 +44,10 @@ public class AIController {
     @RequestMapping(value = "/ai/rag", method = RequestMethod.POST)
     public Map<String,Object> generate(@RequestBody MessageRequest messageRequest) {
         Message[] messages = messageRequest.getMessages();
-        logger.info("Getting Messages " + messages);
+
+        for (Message message : messages) {
+            logger.info("Getting Messages " + message.getText());
+        }
 
         String query = messages[messages.length - 1].getText();
         String result = messageRetriever.retrieve(query);

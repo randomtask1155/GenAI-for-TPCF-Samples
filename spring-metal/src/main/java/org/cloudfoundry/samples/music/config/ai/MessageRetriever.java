@@ -54,14 +54,14 @@
  
 	 public String retrieve(String message) {
  
-		 return this.chatClient
+		 /*return this.chatClient
 				 .prompt()
 				 .advisors(new QuestionAnswerAdvisor(this.vectorStore))
 				 .user(message)
 				 .call()
-				 .content();
+				 .content();*/
  
-		 /* // hand rolled implementation
+		 /* // hand rolled implementation */
 		 List<Document> relatedDocuments = this.vectorStore.similaritySearch(message);
 		 logger.info("first doc retrieved " + relatedDocuments.get(0).toString());
  
@@ -73,7 +73,6 @@
 				 .user(message)
 				 .call()
 				 .content();
-		 */
  
 	 }
  
